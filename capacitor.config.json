@@ -1,0 +1,6 @@
+{
+  "appId": "com.shufflr.app",
+  "appName": "Shufflr",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
