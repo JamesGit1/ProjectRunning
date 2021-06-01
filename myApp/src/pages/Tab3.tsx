@@ -2,6 +2,7 @@ import { IonContent, IonHeader, IonItem, IonLabel, IonPage, IonTitle, IonToggle,
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab3.css';
 import React, { useState } from 'react';
+import { enableDarkTheme } from '../helpers/utils'
 
 const Tab3: React.FC = () => {
   const [checked, setChecked] = useState(false);
