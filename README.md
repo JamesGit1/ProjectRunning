@@ -4,6 +4,6 @@ But basically you need to install node.js and then run app.js in web-api-auth-ex
 
 WILL NOT WORK IF YOU DON'T CHANGE SECRET KEY IN APP.JS WHICH I DONT WANT TO UPLOAD HERE
 
-./myApp contains all app code for react/capacitor
+./myApp contains all app code for ionic/react/capacitor
 
-Currently working on https://ionicframework.com/docs/react/your-first-app/3-saving-photos
+https://ionicframework.com/docs/react/your-first-app/2-taking-photos , basic photo gallery implemented from this tutorial NOTE : CameraPhoto depreciated replaced by Photo, Photo requires additional filetype variable but apart from that exactly the same as in docs
