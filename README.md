@@ -5,3 +5,5 @@ But basically you need to install node.js and then run app.js in web-api-auth-ex
 WILL NOT WORK IF YOU DON'T CHANGE SECRET KEY IN APP.JS WHICH I DONT WANT TO UPLOAD HERE
 
 ./myApp contains all app code for react/capacitor
+
+Currently working on https://ionicframework.com/docs/react/your-first-app/3-saving-photos
