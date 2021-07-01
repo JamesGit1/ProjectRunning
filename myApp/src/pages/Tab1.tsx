@@ -2,8 +2,9 @@ import { IonButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonPage, 
 //import ExploreContainer from '../components/ExploreContainer';
 import { star } from 'ionicons/icons';
 import './Tab1.css';
-import { authWithSpotify } from '../helpers/utils';
+import { authWithSpotify} from '../helpers/utils';
 import { addListener } from 'process';
+
 
 const Tab1: React.FC = () => {
   const spotifyLogin = () =>{
@@ -41,10 +42,8 @@ const Tab1: React.FC = () => {
           }}>
           <IonButton onClick={spotifyLogin}>
             Login With Spotify
-            <IonIcon slot="icon-only" icon={star} />
             <IonRippleEffect type="unbounded"></IonRippleEffect>
           </IonButton>
-         
         </div>
       </IonContent>
     </IonPage>
