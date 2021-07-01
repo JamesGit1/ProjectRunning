@@ -5,17 +5,16 @@ import './Tab1.css';
 import { authWithSpotify } from '../helpers/utils';
 import { addListener } from 'process';
 
-
 const Tab1: React.FC = () => {
   const spotifyLogin = () =>{
     authWithSpotify();
   };
 
   return (
-    <IonPage>
-      <IonHeader>
+    <IonPage >
+      <IonHeader >
         <IonToolbar>
-          <IonTitle>Home</IonTitle>
+          <IonTitle >Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

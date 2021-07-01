@@ -28,8 +28,6 @@
     "@types/react-router-dom": "^5.1.7",
     "cordova-plugin-customurlscheme": "^5.0.2",
     "cordova-plugin-file": "^6.0.2",
-    "cordova-spotify": "^0.5.8",
-    "cordova-spotify-oauth": "^0.1.13",
     "ionicons": "^5.4.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

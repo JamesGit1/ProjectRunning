@@ -11,13 +11,5 @@
     <param name="onload" value="true"/>
   </feature>
 
-  <feature name="SpotifyConnector">
-    <param name="android-package" value="rocks.festify.CordovaSpotify"/>
-  </feature>
-
-  <feature name="SpotifyOAuth">
-    <param name="android-package" value="rocks.festify.SpotifyOAuthPlugin"/>
-  </feature>
-
   
 </widget>
