@@ -1,4 +1,5 @@
-import { authorize } from 'cordova-spotify-oauth/www/spotify-oauth'
+import { SpotifyAuth } from '@ionic-native/spotify-auth/ngx';
+
 var result = {};
 
 export function enableDarkTheme(shouldEnable: boolean) {
@@ -6,6 +7,7 @@ export function enableDarkTheme(shouldEnable: boolean) {
 }
 
 export function authWithSpotify() {
+  const spotifyAuth = new SpotifyAuth();
 
   const config = {
     clientId: "6875299652d04e53a7067cf12fa0d627",
@@ -15,10 +17,10 @@ export function authWithSpotify() {
     tokenRefreshUrl: "https://shufflr-spotify.herokuapp.com/refresh",
   };
 
-  // authorize(config).then(({ accessToken, expiresAt }) => {
-  //   console.log(`Got an access token, its ${accessToken}!`);
-  //   console.log(`Its going to expire in ${expiresAt - Date.now()}ms.`);
-  //   result = { access_token: accessToken, expires_in: expiresAt};
-  // });
+  spotifyAuth.authorize(config).then(({ accessToken, expiresAt }) => {
+    console.log(`Got an access token, its ${accessToken}!`);
+    console.log(`Its going to expire in ${expiresAt - Date.now()}ms.`);
+    result = { access_token: accessToken, expires_in: expiresAt };
+  });
 }
 
