@@ -1,0 +1,7 @@
+{
+  "name": "shufflr",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
