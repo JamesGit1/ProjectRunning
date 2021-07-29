@@ -16,7 +16,7 @@ export class HomePage {
   authWithSpotify() {
     const config = {
       clientId: '6875299652d04e53a7067cf12fa0d627',
-      redirectUrl: 'shufflr://callback',
+      redirectUrl: 'shufflr-spotify://callback',
       scopes: [
         'streaming',
         'playlist-read-private',
@@ -30,11 +30,17 @@ export class HomePage {
     cordova.plugins.spotifyAuth
       .authorize(config)
       .then(({ accessToken, encryptedRefreshToken, expiresAt }) => {
+
         this.result = {
           accessTokenResult: accessToken,
           expiresAtResult: expiresAt,
           ref: encryptedRefreshToken,
         };
       });
+  }
+
+  spotifyLogOut() {
+    this.result = {};
+    cordova.plugins.spotifyAuth.forget();
   }
 }
