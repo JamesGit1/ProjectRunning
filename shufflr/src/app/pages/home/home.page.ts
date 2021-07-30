@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import * as SpotifyWebApi from 'spotify-web-api-js';
+//import * as SpotifyWebApi from 'spotify-web-api-js';
 
 declare let cordova: any;
 
