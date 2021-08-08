@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
-//import * as SpotifyWebApi from 'spotify-web-api-js';
+import { NavController, Platform, LoadingController} from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
+
+import SpotifyCall from '../../../assets/js/SpotifyWebApi';
 
 declare let cordova: any;
 
@@ -11,10 +13,25 @@ declare let cordova: any;
 })
 export class HomePage {
   result = {};
+  lastsong = {};
+  data = '';
+  spotifyApi: any;
+  playlists = [];
+  loggedIn = false;
+  //loading: Loading;
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, private storage: Storage, private plt: Platform, private loadingCtrl: LoadingController) {
+    this.spotifyApi = SpotifyCall.spotifyCall();
+    this.plt.ready().then(() => {
+      this.storage.get('logged_in').then(res => {
+        if (res) {
+          this.authWithSpotify(true);
+        }
+      });
+    });
+  }
 
-  authWithSpotify() {
+  authWithSpotify(showLoading = false) {
     const config = {
       clientId: '6875299652d04e53a7067cf12fa0d627',
       redirectUrl: 'shufflr-spotify://callback',
@@ -28,20 +45,52 @@ export class HomePage {
       tokenRefreshUrl: 'https://shufflr-spotify.herokuapp.com/refresh',
     };
 
-    cordova.plugins.spotifyAuth
-      .authorize(config)
-      .then(({ accessToken, encryptedRefreshToken, expiresAt }) => {
+    if (showLoading) {
+      /*
+      this.loading = this.loadingCtrl.create();
+      this.loading.present();
+      */
+    }
 
-        this.result = {
-          accessTokenResult: accessToken,
-          expiresAtResult: expiresAt,
-          ref: encryptedRefreshToken,
-        };
+    cordova.plugins.spotifyAuth.authorize(config)
+      .then(({ accessToken, encryptedRefreshToken, expiresAt }) => {
+        /*
+        if (this.loading) {
+          this.loading.dismiss();
+        }
+        */
+
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        this.result = { access_token: accessToken, expires_in: expiresAt, refresh_token: encryptedRefreshToken };
+        this.loggedIn = true;
+        this.spotifyApi.setAccessToken(accessToken);
+        this.lastsong = this.spotifyApi.getMyRecentlyPlayedTracks();
+        //this.getUserPlaylists();
+        this.storage.set('logged_in', true);
+      }, err => {
+        console.error(err);
+        /*
+        if (this.loading) {
+          this.loading.dismiss();
+        }
+        */
+      });
+  }
+
+  getUserPlaylists() {
+    this.spotifyApi.getUserPlaylists().then(data => {
+        this.playlists = data.items;
+      }, err => {
+        console.error(err);
       });
   }
 
   spotifyLogOut() {
     this.result = {};
     cordova.plugins.spotifyAuth.forget();
+
+    this.loggedIn = false;
+    this.playlists = [];
+    this.storage.set('logged_in', false);
   }
 }
