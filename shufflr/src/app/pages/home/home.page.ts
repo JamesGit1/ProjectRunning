@@ -21,7 +21,7 @@ export class HomePage {
   //loading: Loading;
 
   constructor(public navCtrl: NavController, private storage: Storage, private plt: Platform, private loadingCtrl: LoadingController) {
-    this.spotifyApi = SpotifyCall.spotifyCall();
+    //this.spotifyApi = SpotifyCall.spotifyCall();
     this.plt.ready().then(() => {
       this.storage.get('logged_in').then(res => {
         if (res) {
@@ -64,7 +64,7 @@ export class HomePage {
         this.result = { access_token: accessToken, expires_in: expiresAt, refresh_token: encryptedRefreshToken };
         this.loggedIn = true;
         this.spotifyApi.setAccessToken(accessToken);
-        this.lastsong = this.spotifyApi.getMyRecentlyPlayedTracks();
+        //this.lastsong = this.spotifyApi.getMyRecentlyPlayedTracks();
         //this.getUserPlaylists();
         this.storage.set('logged_in', true);
       }, err => {
