@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, Platform, LoadingController} from '@ionic/angular';
+import {Platform, LoadingController} from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
-import SpotifyCall from '../../../assets/js/SpotifyWebApi';
+import SpotifyWebApi from 'spotify-web-api-js';
 
 declare let cordova: any;
 
@@ -20,8 +20,9 @@ export class HomePage {
   loggedIn = false;
   //loading: Loading;
 
-  constructor(public navCtrl: NavController, private storage: Storage, private plt: Platform, private loadingCtrl: LoadingController) {
-    //this.spotifyApi = SpotifyCall.spotifyCall();
+  constructor(private storage: Storage, private plt: Platform, private loadingCtrl: LoadingController) {
+    this.spotifyApi = new SpotifyWebApi();
+
     this.plt.ready().then(() => {
       this.storage.get('logged_in').then(res => {
         if (res) {
@@ -64,8 +65,8 @@ export class HomePage {
         this.result = { access_token: accessToken, expires_in: expiresAt, refresh_token: encryptedRefreshToken };
         this.loggedIn = true;
         this.spotifyApi.setAccessToken(accessToken);
-        //this.lastsong = this.spotifyApi.getMyRecentlyPlayedTracks();
-        //this.getUserPlaylists();
+        this.lastsong = this.spotifyApi.getMyRecentlyPlayedTracks();
+        this.getUserPlaylists();
         this.storage.set('logged_in', true);
       }, err => {
         console.error(err);
@@ -84,6 +85,10 @@ export class HomePage {
         console.error(err);
       });
   }
+
+  // openPlaylist(item) {
+  //   this.navCtrl.push('PlaylistPage', { playlist: item });
+  // }
 
   spotifyLogOut() {
     this.result = {};
