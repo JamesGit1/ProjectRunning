@@ -1,5 +1,7 @@
 <ion-header [translucent]="true">
   <div *ngIf="!loggedIn" text-center padding>Please Login!</div>
+  <div *ngIf="loggedIn" text-center padding>Thanks for logging in! {{usersName}}</div>
+  
   <!-- <ion-toolbar>
     <ion-title>
       Blank
@@ -12,6 +14,10 @@
   <div id="container">
     <ion-button ion-button full (click)="authWithSpotify()" *ngIf="!loggedIn">Login To Spotify</ion-button>
     <ion-button ion-button full (click)="spotifyLogOut()" *ngIf="loggedIn">Log off</ion-button>
+
+    <!-- <ion-button (click)="showLoader()" color="success" expand="block">Display loader</ion-button>
+
+    <ion-button (click)="hideLoader()" color="danger" expand="block">Close loader</ion-button> -->
     <!-- <strong>Run</strong> -->
     <br>
     {{result | json}}

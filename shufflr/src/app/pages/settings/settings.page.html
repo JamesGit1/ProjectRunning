@@ -5,6 +5,8 @@
 </ion-header>
 
 <ion-content>
-  {{loggedIn}}
-    <ion-button ion-button full (click)="spotifyLogOut()">Log off</ion-button>
+  <div id="container">
+    {{loggedIn}}
+    <ion-button ion-button full (click)="spotifyLogOut()" *ngIf="loggedIn">Log off</ion-button>
+  </div>
 </ion-content>

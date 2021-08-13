@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { Platform, LoadingController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 
 import { appstatus } from '@services/appstatus';
+import { IonLoaderService } from '../../ion-loader.service';
 
 declare let cordova: any;
 
@@ -20,19 +21,44 @@ export class HomePage {
   spotifyApi: any;
   playlists = [];
   loggedIn = false;
-  loading; //TODO: Get loading to work correctly, just sets up controller at the moment
+  usersName: string [];
 
-  constructor(private storage: Storage, private plt: Platform, public loadingController: LoadingController, private appData: appstatus) {
+  constructor(private storage: Storage, private plt: Platform, private appData: appstatus, private ionLoaderService: IonLoaderService) {
     this.spotifyApi = new SpotifyWebApi();
-
     this.plt.ready().then(() => {
       this.storage.get('logged_in').then(res => {
+        // console.log("LOGGEDINRESPONSE:");
+        // console.log(res);
         if (res) {
           this.authWithSpotify(true);
         }
       });
     });
   }
+
+  async ngOnInit() {
+    // If using a custom driver:
+    // await this.storage.defineDriver(MyCustomDriver)
+    await this.storage.create();
+  }
+
+  //LOADER CODE
+  displayAutoLoader() {
+    this.ionLoaderService.autoLoader();
+  }
+
+  showLoader() {
+    this.ionLoaderService.simpleLoader();
+  }
+
+  hideLoader() {
+    this.ionLoaderService.dismissLoader();
+  }
+
+  customizeLoader() {
+    this.ionLoaderService.customLoader();
+  }
+
 
   authWithSpotify(showLoading = false) {
     const config = {
@@ -50,26 +76,24 @@ export class HomePage {
     };
 
     if (showLoading) {
-      this.loading = this.loadingController.create({
-        message: 'Please Wait...',
-      });
-      this.loading.present();
+      //this.showLoader();
+      // this.loading = this.loadingController.create({
+      //   message: 'Please Wait...',
+      // });
+      // this.loading.present();
     }
 
     cordova.plugins.spotifyAuth.authorize(config)
       .then(({ accessToken, encryptedRefreshToken, expiresAt }) => {
-        if (this.loading) {
-          this.loading.dismiss();
-        }
+        this.hideLoader();
 
         // eslint-disable-next-line @typescript-eslint/naming-convention
         //Set result of api call
         this.result = { access_token: accessToken, expires_in: expiresAt, refresh_token: encryptedRefreshToken };
-        
-        
 
         this.spotifyApi.setAccessToken(accessToken);
 
+        this.getUserDetails();
         //this.getUsersLastSongs();
         //this.getUserPlaylists();
 
@@ -81,15 +105,21 @@ export class HomePage {
 
       }, err => {
         console.error(err);
-        if (this.loading) {
-          this.loading.dismiss();
-        }
+        this.hideLoader();
       });
   }
 
   getUserPlaylists() {
     this.spotifyApi.getUserPlaylists().then(data => {
       this.playlists = data.items;
+    }, err => {
+      console.error(err);
+    });
+  }
+
+  getUserDetails() {
+    this.spotifyApi.getMe().then(data => {
+      var user = data;
     }, err => {
       console.error(err);
     });

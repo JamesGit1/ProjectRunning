@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable()
 export class appstatus {
-    loggedIn:boolean;
-    
-    private hiddenData:string; // Can only be used internally
+    loggedIn: boolean = false;
 
-    constructor(){ }
-
-    someFunction(){
-        // Does something...
-    }
-
-    // Can only be used internally
-    private somePrivateFunction(){
-        // Does something else...
+    constructor(private storage: Storage, private plt: Platform) {
+        //When ready check if system logged in already
+        this.plt.ready().then(() => {
+            this.storage.get('logged_in').then(res => {
+                if (res) {
+                    this.loggedIn = true;
+                }
+            });
+        });
     }
 }

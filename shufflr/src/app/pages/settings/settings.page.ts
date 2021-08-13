@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
+import { Platform } from '@ionic/angular';
 
 import { appstatus } from '@services/appstatus';
 
@@ -12,15 +13,14 @@ declare let cordova: any;
 })
 export class SettingsPage{
   loggedIn:boolean = false;
-  test:string;
   
-  constructor(private storage: Storage, private appData: appstatus) {
+  constructor(private storage: Storage, private appData:appstatus, private plt:Platform) {
     this.loggedIn = appData.loggedIn;
   }
   
   spotifyLogOut() {
-    cordova.plugins.spotifyAuth.forget();
-
+    this.loggedIn = false;
     this.storage.set('logged_in', false);
+    cordova.plugins.spotifyAuth.forget();
   }
 }
