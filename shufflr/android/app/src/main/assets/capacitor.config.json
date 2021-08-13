@@ -2,5 +2,8 @@
 	"appId": "io.ionic.starter",
 	"appName": "shufflr",
 	"webDir": "www",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"server": {
+		"url": "http://192.168.1.183:8100"
+	}
 }

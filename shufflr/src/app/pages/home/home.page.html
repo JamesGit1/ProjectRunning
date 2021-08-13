@@ -1,11 +1,13 @@
+<ion-header [translucent]="true">
+  <div *ngIf="!loggedIn" text-center padding>Please Login!</div>
+  <!-- <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar> -->
+</ion-header>
+
 <ion-content [fullscreen]="true">
-  <ion-header [translucent]="true">
-    <!-- <ion-toolbar>
-      <ion-title>
-        Blank
-      </ion-title>
-    </ion-toolbar> -->
-  </ion-header>
 
   <div id="container">
     <ion-button ion-button full (click)="authWithSpotify()" *ngIf="!loggedIn">Login To Spotify</ion-button>
@@ -13,13 +15,12 @@
     <!-- <strong>Run</strong> -->
     <br>
     {{result | json}}
-    <br>
-    {{lastsong}}
+    <br><br>
+    <p>Songs</p>
+    {{lastsongs | json}}
   </div>
-
-  <div *ngIf="!loggedIn" text-center padding>Please Login to load your Playlists!</div>
-
-  <ion-list>
+  
+  <!-- <ion-list>
     <button ion-item *ngFor="let item of playlists">
       <ion-avatar item-start *ngIf="item.images.length > 0">
         <img [src]="item.images[0].url">
@@ -27,5 +28,5 @@
       {{ item.name }}
       <p>Tracks: {{ item.tracks.total }}</p>
     </button>
-  </ion-list>
+  </ion-list> -->
 </ion-content>
